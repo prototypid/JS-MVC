@@ -5,7 +5,7 @@ import recipeView from "./views/recipeView.js";
 
 ///////////////////////////////////////
 
-const showRecipe = async function () {
+const renderRecipe = async function () {
   try {
     const id = window.location.hash.slice(1);
 
@@ -21,9 +21,12 @@ const showRecipe = async function () {
     recipeView.render(recipe);
   } catch (err) {
     console.error(err);
+    recipeView.renderError();
   }
 };
 
-["hashchange", "load"].forEach((ev) => window.addEventListener(ev, showRecipe));
-// window.addEventListener("hashchange", showRecipe);
-// window.addEventListener("load", showRecipe);
+const init = function () {
+  recipeView.addEventHandler(renderRecipe);
+};
+
+init();
