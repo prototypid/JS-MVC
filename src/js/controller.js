@@ -1,6 +1,7 @@
 import * as model from "./model.js";
 import recipeView from "./views/recipeView.js";
 import searchView from "./views/searchView.js";
+import resultView from "./views/resultView.js";
 
 ///////////////////////////////////////
 
@@ -26,13 +27,14 @@ const renderRecipe = async function () {
 
 const searchForRecipes = async function () {
   try {
+    resultView.renderSpinner();
     const query = searchView.getQuery();
 
     if (!query) return;
 
     await model.loadSearchResults(query);
 
-    console.log(model.state.search.results);
+    resultView.render(model.state.search.results);
   } catch (err) {
     console.log(err);
   }
@@ -43,3 +45,8 @@ const init = function () {
 };
 
 init();
+
+// hmr
+if (module.hot) {
+  module.hot.accept();
+}
